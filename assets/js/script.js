@@ -4133,6 +4133,7 @@ function fetchQuotes(author) {
             "dateModified": "2023-04-14"
         }
     ]
+    return quotesList;
 
 }
 
