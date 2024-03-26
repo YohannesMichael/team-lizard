@@ -12,14 +12,14 @@ function fetchTags(){
     params = TAGS_ENDPOINT; //option to add parameters
     fetchUrl = `${QUOTES_URL}${params}`;
 
-/* fetch(fetchUrl)
+fetch(fetchUrl)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
     console.log(data);
   });
- */
+
   tagList = [
     {
         "_id": "PIyOMHYqPd",
@@ -567,13 +567,13 @@ function fetchAuthors(tag) {
     params = AUTHORS_ENDPOINT; //option to add parameters
     fetchUrl = `${QUOTES_URL}${params}?limit=${LIMIT}`;
 
-    /* fetch(fetchUrl)
+    fetch(fetchUrl)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
         console.log(data.results);
-    }); */
+    });
 
     const authorList = [
         {
@@ -2237,13 +2237,13 @@ function fetchQuotes(author) {
     params = QUOTES_ENDPOINT; //option to add parameters
     fetchUrl = `${QUOTES_URL}${params}?limit=${LIMIT}`;
 
-    /* fetch(fetchUrl)
+    fetch(fetchUrl)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
         console.log(data.results);
-    }); */
+    });
 
     const quotesList = [
         {

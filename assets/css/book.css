@@ -1,0 +1,152 @@
+@charset "utf-8";
+/* CSS Document */
+/* =============================================================
+ 	First Name		: Strahinja     					    
+ 	Last Name		: Popovic					            
+ 	Developer Name  : CodexDeveloper			        
+ 	WebMaster Email	: spope.mails@gmail.com               
+ ============================================================== */
+
+/* ***************************************************************************************** */
+/* Definition of the css stylingn variables ************************************************ */
+/* ***************************************************************************************** */
+
+:root {
+  --dark: black;
+  --light: white; 
+  --gray: rgb(240, 240, 240);
+  --gray-dark: rgb(23,23,23);
+  --electron-blue: rgb(8,129,209);
+  --naval-blue: rgba(1,33,55,1.00);
+  --light-web-blue: rgb(12, 209, 235);
+}
+
+body {
+  font-size: 24px;
+  background-color: var(--gray);
+  font-family: "Roboto", sans-serif;
+}
+
+div#header {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  background-color: var(--naval-blue);
+}
+
+div#header section#header-main {
+  width: 100%;
+  font-size: 3vw;
+  line-height: 1.5;
+  text-align: center;
+  font-weight: bolder;
+  color: var(--light-web-blue);
+  font-family: "Roboto", sans-serif;
+}
+
+div#header section#header-main span {
+  color: var(--electron-blue);
+}
+
+div#top {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+div#top section#input-book {
+  height: auto;
+  margin: 0 0.5vw 0 1vw;
+  width: calc(20% - 1.5vw);
+  background-color: var(--gray);
+  border-bottom: 1px solid var(--electron-blue);
+}
+
+div#top section#current-book {
+  width: 80%;
+  height: auto;
+  background-color: var(--gray);
+}
+
+div#top section#current-book section#sub-section {
+  height: 300px;
+  margin-top: 1vw;
+  margin-left: 0.5vw;
+  border-radius:  5px;
+  width: calc(100% - 1.5vw);
+  background-color: var(--gray);
+  border: 2px solid var(--electron-blue);
+}
+
+div#middle {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+div#middle section#book-list {
+  height: 300px;
+  display: flex;
+  border-radius: 5px;
+  flex-direction: row;
+  margin: 1vw 1vw 1vw 1vw;
+  width: calc(100% - 2vw);
+  background-color: var(--gray);
+  border: 1px solid var(--electron-blue);
+}
+
+label {
+  font-size: 1vw;
+  font-weight: bolder;
+  color: var(--naval-blue);
+  margin: 2vw 0 0.5vw 10%;
+  font-family: "Roboto", sans-serif;
+}
+
+input[type=text] {
+  width: 80%;
+  height: 2.5vw;
+  margin: 0 1vw;
+  border-radius: 5px;
+  padding: 5px 5px 5px 5px;
+  margin: 0.5vw 10% 0 10%;
+  font-family: "Roboto", sans-serif;
+  border: 2px solid var(--electron-blue);
+}
+
+input::placeholder {
+  font-size: 1vw;
+  line-height: 1.5;
+}
+
+button#submit {
+  width: 80%;
+  height: 2.5vw;
+  font-size: 1.5vw;
+  border-radius: 5px;
+  font-weight: bolder;
+  color: var(--light);
+  margin: 0.5vw 10% 2vw 10%;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--naval-blue);
+}
+
+p#error-message {
+  font-size: 1vw; 
+  line-height: 1.5;
+  margin-left: 10%;
+  font-weight: bold; 
+  color: rgb(170, 28, 28); 
+}
+
+footer#bottom {
+  width: 100%;
+  height: 300px;
+  background-color: var(--gray-dark);
+}
+
+table tr th, td {
+    padding: 5px 5px 5px 5px;
+    font-family: "Roboto", sans-serif;
+}

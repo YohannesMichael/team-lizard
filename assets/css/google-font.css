@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+/* =============================================================
+ 	First Name			: Strahinja     					    
+ 	Last Name			  : Popovic					            
+ 	Developer Name  : CodexDeveloper			        
+ 	WebMaster Email	:	spope.mails@gmail.com               
+ ============================================================== */
+
+/* ***************************************************************************************** */
+/* Definition of the css stylingn variables ************************************************ */
+/* ***************************************************************************************** */
+
+.roboto-regular {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .roboto-medium {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .roboto-bold {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
