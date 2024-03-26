@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    
+    <main>
+        <h1 class="text-3xl font-bold underline">Quote Generator</h1>
+        <div>
+            <label for="author">Author</label>
+            <input id="author" type="text" placeholder="Enter author name">
+        </div>
+        <div>
+            <label for="genre">Genre</label>
+            <input id="genre" type="text" placeholder="Enter genre">
+        </div>
+        <div>
+            <h2>Quote</h2>
+            <p id="quote-header">Your quote will appear here.</p>
+        </div>
+        <button type="button">Generate Quote</button>
+    </main>
 </body>
 <script src="./assets/js/script.js"></script>
 </html>
