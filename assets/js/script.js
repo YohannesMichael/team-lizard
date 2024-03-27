@@ -2267,8 +2267,7 @@ function fetchQuotes(author) {
     })
     .then(function (data) {
         console.log(data.results);
-<<<<<<< HEAD
-    }); */
+    }); 
 
     const quotesList = [
         {
@@ -4159,10 +4158,6 @@ function fetchQuotes(author) {
         }
     ]
     return quotesList;
-=======
-    }); 
-    
->>>>>>> 0c88b6ffb37075404a73ac7836fc3d944436ddb6
 
 }
 
