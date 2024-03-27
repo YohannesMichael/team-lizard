@@ -1,7 +1,11 @@
 const QUOTES_URL = "https://api.quotable.io";
+
+const AUTHOR_URL = "https://openlibrary.org"
+
+const AUTHOR_ENDPOINT = "/subjects/";
 const QUOTES_ENDPOINT = "/quotes";
 const TAGS_ENDPOINT = "/tags";
-const AUTHORS_ENDPOINT = "/authors";
+
 const LIMIT = 150;
 
 
@@ -12,15 +16,21 @@ function fetchTags(){
     params = TAGS_ENDPOINT; //option to add parameters
     fetchUrl = `${QUOTES_URL}${params}`;
 
-/* fetch(fetchUrl)
+fetch(fetchUrl)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
-    console.log(data);
+    
+    tagList = [];
+
+    for (dataPoint of data) {
+        console.log(dataPoint.slug);
+        tagList.push(dataPoint);
+    }
   });
- */
-  tagList = [
+
+/*   tagList = [
     {
         "_id": "PIyOMHYqPd",
         "name": "Age",
@@ -557,23 +567,31 @@ function fetchTags(){
         "dateAdded": "2023-04-14",
         "dateModified": "2023-04-14"
     }
-]
+] */
   return tagList;
     //taglist is a result of the type array, containing an array of objects which 
     //can act like a genre search in relation to books from https://api.quotable.io"
+    
 }
+
+
+//https://openlibrary.org/subjects/love.json
+
 function fetchAuthors(tag) {
 
-    params = AUTHORS_ENDPOINT; //option to add parameters
-    fetchUrl = `${QUOTES_URL}${params}?limit=${LIMIT}`;
+    params = `${AUTHOR_ENDPOINT}${tag}.json`; //option to add parameters
+    
+    fetchUrl = `${AUTHOR_URL}${params}`;
 
-    /* fetch(fetchUrl)
+    console.log(fetchUrl);
+
+    fetch(fetchUrl)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
-        console.log(data.results);
-    }); */
+        console.log(data);
+    }); 
 
     const authorList = [
         {
@@ -2231,18 +2249,25 @@ function fetchAuthors(tag) {
     return authorList;
       //authorlist is a result of the type array, containing an array of objects which 
       //represent a book per opbject in the .results object of the data returned. https://api.quotable.io"
+      ///search/authors?query=Einstein
 }
-function fetchQuotes(author) {
-    //GET /quotes?author=albert-einstein
-    params = QUOTES_ENDPOINT; //option to add parameters
-    fetchUrl = `${QUOTES_URL}${params}?limit=${LIMIT}`;
 
-    /* fetch(fetchUrl)
+//this function needs to have an author slug which is part of the autor JSON object.
+
+function fetchQuotes(author) {
+    
+    console.log("author is", author);
+    params = `${QUOTES_ENDPOINT}?author=${author}`; 
+    console.log(`${QUOTES_URL}${params}`);
+    fetchUrl = `${QUOTES_URL}${params}`;
+
+    fetch(fetchUrl)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
         console.log(data.results);
+<<<<<<< HEAD
     }); */
 
     const quotesList = [
@@ -4134,11 +4159,15 @@ function fetchQuotes(author) {
         }
     ]
     return quotesList;
+=======
+    }); 
+    
+>>>>>>> 0c88b6ffb37075404a73ac7836fc3d944436ddb6
 
 }
 
 console.log(fetchTags()); //fetch all tags from QUOTES_URL
-console.log(fetchQuotes("authorName")); //fetch all quotes from QUOTES_ENDPOINT
-console.log(fetchAuthors("tag")); //fetch all authors from AUTHORS_ENDPOINT
+console.log(fetchQuotes("a-a-milne")); //fetch all quotes from QUOTES_ENDPOINT
+console.log(fetchAuthors("love")); //fetch all authors from AUTHORS_ENDPOINT
 
 
