@@ -1,16 +1,38 @@
 const QUOTES_URL = "https://api.quotable.io";
+const TAGS_ENDPOINT = "/tags";
 
 const AUTHOR_URL = "https://openlibrary.org"
+const BIO_ENDPOINT = "/authors";
 
 const AUTHOR_ENDPOINT = "/subjects/";
 const QUOTES_ENDPOINT = "/quotes";
-const TAGS_ENDPOINT = "/tags";
 
-const LIMIT = 15;
+const LIMIT = 150;
 
 
 // as a developer, when I call a fetch function for fetchTags it returns a list of 
 // tags that are available at the QUOTES_URL.
+
+
+function fetchBiography(authorId) {
+    params = ""; //option to add parameters
+    fetchUrl = `${AUTHOR_URL}${BIO_ENDPOINT}${params}.json`;
+
+    fetch(fetchUrl)
+      .then(function (response) {
+        
+        return response.json();
+    })
+    .then(function (data) {
+        console.log("fetch biography", data);
+        const tagList = [];
+
+    for (dataPoint of data) {
+        tagList.push(dataPoint.slug);
+    }
+  });
+
+}
 
 
 function fetchTags(){
@@ -130,7 +152,8 @@ $authors = $("#author-container").addClass('container');
 
 
 function createAuthorCard (author) {
-    //this needs developing, by taking the code out from getAuthourWorks function and putting it in here
+    //this needs developing, by taking the code out from getAuthourWorks function and putting it in 
+    //here we get an authorcard we can append to the authorcontainer div
     // The author object should be name, biography, quotes list, place of birth, weather in place of birth, etc.
 
     const blankAuthor = {
@@ -141,12 +164,25 @@ function createAuthorCard (author) {
             "anothher quote"
         ],
         birthPlace: "",
-        weatherInHomeTown
+        weatherInHomeTown: ""
     }
 
-    $authorCard = $('<div></div>');
-    $authorCard.append(`<h5>${author.name}</h5>`)
 
+    $authorCard = $(`<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-10"></div>`);
+    
+    $authorInnerContainer = $(`<div class="max-w-xs mx-auto md:ml-0"></div>`);
+    
+    $authorImage = $(`<img class="w-24 h-24 mb-6 rounded-full" src="https://t4.ftcdn.net/jpg/05/95/83/67/360_F_595836741_8hyycaWwQphpA0vaMsuoce7tRr8xPKtP.jpg" alt="">`);
+    $authorName = $(`<h3 class="mb-1 text-lg text-coolGray-800 font-semibold">${author.name}</h3>`);
+    $authorBiographyTitle = $(`<span class="inline-block mb-4 text-lg font-medium text-green-500">Biography</span>`)
+    $authorBiographyText = $(`<p class="mb-4 text-coolGray-500 font-medium"> </p>`)
+        $authorInnerContainer.append($authorImage);
+        $authorInnerContainer.append($authorName);
+        $authorInnerContainer.append($authorBiographyTitle);
+        $authorInnerContainer.append($authorBiographyText);
+
+    $authorCard.append($authorInnerContainer);
+    console.log($authorCard);
     return $authorCard;
 
 }
@@ -163,7 +199,7 @@ function getAuthorsFromWorks (works) {
             authorsArray.push(work.authors);
             console.log("getAuthors function:",work.authors);
 
-            const auth = 
+            /* const auth = 
             $(`<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-10">
                     <div class="max-w-xs mx-auto md:ml-0">
                         <img class="w-24 h-24 mb-6 rounded-full" src="https://t4.ftcdn.net/jpg/05/95/83/67/360_F_595836741_8hyycaWwQphpA0vaMsuoce7tRr8xPKtP.jpg" alt="">
@@ -176,10 +212,10 @@ function getAuthorsFromWorks (works) {
                             <button class="inline-block py-1 px-2 w-full md:w-auto text-sm leading-7 bg-sky-200 hover:bg-sky-600 hover:bg-green-600 font-medium text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent rounded-md shadow-sm">birthplace weather</button>
                         </div>
                     </div>
-            </div>`);
+                </div>`); */
 
-
-            $authors.append(auth);
+            console.log(work.authors[0]);
+            $authors.append(createAuthorCard(work.authors[0]));
 
 
         }
