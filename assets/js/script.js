@@ -16,8 +16,7 @@ async function fetchAuthor() {
         const bookTitles = data.works;
 
         bookTitles.forEach(title => {
-            console.log(title.authors[0].name);
-            authorArr.push(title.authors[0].name);
+            authorArr.push(title.authors[0].name.toLowerCase());
         });
 
         console.log(authorArr);
@@ -29,6 +28,7 @@ async function fetchAuthor() {
 }
 
 fetchAuthor();
+
 
 async function fetchQuote() {
     try {
@@ -52,3 +52,35 @@ async function fetchQuote() {
 }
 
 fetchQuote()
+
+
+
+
+// var str = "Sonic Free Games";
+// str = str.replace(/\s+/g, '-').toLowerCase();
+// console.log(str); // "sonic-free-games"
+// const authorArr1 = authorArr[1];
+// authorArr1.replace(/\s+/g, '-').toLowerCase;
+// console.log(authorArr1);
+// async function fetchQuote() {
+//     try {
+//         const response = await fetch(`https://api.quotable.io/quotes?author=${author[0]}`);
+
+//         if (!response.ok) {
+//             throw new Error("Hmmm, I don't know this author.");
+//         }
+
+//         const data = await response.json();
+//         console.log(data.results);
+//         const quotes = data.results;
+//         quotes.forEach(quote => {
+//             console.log(quote.content);
+//         });
+
+//     }
+//     catch (error) {
+//         console.error(error);
+//     }
+// }
+
+// fetchQuote()
