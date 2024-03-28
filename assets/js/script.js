@@ -130,8 +130,18 @@ $authors = $("#author-container").addClass('container');
 
 
 function createAuthorCard (author) {
+    //this needs developing, by taking the code out from getAuthourWorks function and putting it in here
+    // The author object should be name, biography, quotes list, place of birth, weather in place of birth, etc.
+
     const blankAuthor = {
         name: "",
+        biography: "",
+        quotes: [
+            "this is the day",
+            "anothher quote"
+        ],
+        birthPlace: "",
+        weatherInHomeTown
     }
 
     $authorCard = $('<div></div>');
@@ -173,7 +183,7 @@ function getAuthorsFromWorks (works) {
 
 
         }
-    console.log("Authors array in getAuthorsFromWorks: ",authorsArray);
+    
     return authorsArray;
 }
 
