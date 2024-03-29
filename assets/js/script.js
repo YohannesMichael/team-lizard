@@ -17,36 +17,6 @@ const LIMIT = 150;
 // tags that are available at the QUOTES_URL.
 
 
-function fetchBiography(authorId) {
-    params = authorId; //option to add parameters
-    fetchUrl = `${OPEN_LIBRARY_BIO_URL}/${params}.json`;
-
-    console.log("fetch URL in bio ",fetchUrl);
-    
-    fetch(fetchUrl)
-      .then(function (response) {    
-        return response.json();
-    })
-    .then(function (data) {
-        console.log(data);
-        console.log("data in fetch author ",data.name);
-        console.log("data, bio in fetch author ",data.bio.value);
-        
-        const tagList = [];
-
-    for (dataPoint of data) {
-        console.log("data.bio.data", data.bio.value);
-        return data.bio.value;
-    }
-  });
-
-}
-
-console.log("fetch bio: ",fetchBiography('OL52266W'));
-
-// https://openlibrary.org/authors/OL24529A.json
-//console.log('fetch bio', fetchBiography("OL24529A"));
-
 
 //run first to setup auto complete for search bar. can use const tags = fetchTags()
 function fetchTags(){
@@ -67,29 +37,39 @@ fetch(fetchUrl)
 
   });
 
-
+  console.log(tagList);
   return tagList;
     //taglist is a result of the type array, containing an array of objects which 
     //can act like a genre search in relation to books from https://api.quotable.io"
     
 }
-//console.log(fetchTags());
+
+//USE this call to get a list of tags available for the user to search. use this array as the autocomplete for the search bar.
+const searchableTags = fetchTags();
 
 
 //https://openlibrary.org/subjects/love.json
-//authors funciton, it returns an array of authors in a particular genre
-//authorlist is a result of the type array, containing an array of objects which 
+
 //represent a book per opbject in the .results object of the data returned. https://api.quotable.io"
 ///search/authors?query=Einstein
+
+
+/* fetchAuthors function, it returns an array of author OBJECTS in a particular genre RESULT 
+AuthorList = [{
+                name : dataPoint.authors[0].name,
+                key: dataPoint.authors[0].key,
+                hometown : "",
+                profileUrl : ""
+            }] */
 
 function fetchAuthors(tag) {
     //tag ags like a genre here, so that below in the params string we create a {tag}
     //to filter the results to a genres
     
     const limit = 150;
-    params = `${tag}.json?limit=${limit}&page=1`; //option to add parameters
+    params = `limit=${limit}&page=1`; //option to add parameters
     
-    fetchUrl = `${OPEN_LIBRARY_AUTHOR_URL}/${params}`
+    fetchUrl = `https://openlibrary.org/subjects/${tag}.json?${params}`
     
     console.log("fetch authours url: ",fetchUrl);
     let authorList = [];
@@ -106,21 +86,56 @@ function fetchAuthors(tag) {
         //console.log(data.works);
 
         for (dataPoint of data.works) {
-            authorList.push([dataPoint.authors[0].name,dataPoint.authors[0].key]);
+            console.log("data point.authors[0].name: ",dataPoint.authors[0].name);
+            console.log("data point.authors[0].key: ",dataPoint.authors[0].key);
+            authorList.push({
+                name : dataPoint.authors[0].name,
+                key: dataPoint.authors[0].key,
+                hometown : "",
+                profileUrl : ""
+            });
+
+
         }
-        
+        return authorList;
     })
     .then(function (data){
-        
-        return authorList;
+        console.log(data);
+        return data;
 
     })
         
     };
 
+    console.log(fetchAuthors("science"));
+  
 
-//console.log(fetchAuthors("science"));
+//This function fetches a biograhphy for a particular Author.
+function fetchBiography(authorId) {
+    const FETCHURL = `https://openlibrary.org${authorId}.json`
+
+    params = authorId; //option to add parameters
+
+    console.log("------fetch URL in bio ",FETCHURL);
     
+    fetch(FETCHURL)
+      .then(function (response) {    
+        return response.json();
+    })
+    .then(function (data) {
+        console.log(data);
+        console.log("data in fetch author bio value ",data.bio);
+        console.log("data in fetch author bio value ",data.bio.value);
+        if (!data.bio.value) {
+            return data.bio.value;
+        } else return data.bio;
+
+  });
+
+}
+
+console.log("fetch bio: ",fetchBiography('/authors/OL9388A'));
+//console.log("fetch bio: ",fetchBiography('/authors/OL9388A'));
 
 
 //this function needs to have an author slug which is part of the autor JSON object.
@@ -153,7 +168,7 @@ function fetchQuotes(author) {
 
 }
 
-console.log('fetch quotes', fetchQuotes('albert-einstein'));
+//console.log('fetch quotes', fetchQuotes('albert-einstein'));
 
 //fetch all tags from QUOTES_URL
 //console.log(fetchTags()); 
