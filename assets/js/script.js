@@ -18,10 +18,13 @@ const LIMIT = 150;
 // tags that are available at the QUOTES_URL.
 
 
+//this sets up the available genres to use based on the quoteable site. 
 const genres = fetchTags(); //fetches all tages from quoteable site
-$searchBar = $('#search-bs-class');
-$tagList = $('#tag-list'); //links a jquery opbject to the div holding buttons the user can select instead of searching
 
+//this sets the jquery item for the search bar
+$searchBar = $('#search-bs-class');
+//this creates a jquery reference to the tagList below the search bar.
+$tagList = $('#tag-list'); 
 
 //event handler that sets a function to handle the button clicks bubling up to the div taglist.
 $tagList.on('click',function(e) {
@@ -30,15 +33,16 @@ $tagList.on('click',function(e) {
     //this should trigger an event handler for listing the authourcards below
     //the console log above is extracting the genre being clicked on.
     console.log(`genre button clicked:,${genre} to be deleted`);
+    //put the value in the search bar.
     $searchBar.val(genre);
+    //delete the button just pressed
     $(e.target).remove();
+    //repolulate the taglist.
     populateTagList($tagList,return5RandomGenres(genres));
 }); 
 
-
-console.log(return5RandomGenres(genres));
+//this produces 5 random tags from the genre list under the search bar.
 populateTagList($tagList,return5RandomGenres(genres));
-
 //this function gets a 5 long random list from the whole genres list and appends a button for each of the 5 into the 
 //$tagList jquery div.
 
@@ -50,7 +54,7 @@ function populateTagList(tagList,genres) {
     }
    
 }
-
+//returns 5 random itesm from an array
 function return5RandomGenres(genres) {
     let arr = []
 
@@ -140,59 +144,19 @@ function fetchTags(){
 ///search/authors?query=Einstein
 
 
-function fetchAuthors (tag) {
-    let authorList = [];
-
-    if (localStorage.getItem(`tag-${tag}`)) {
-        //console.log(`local Storgage had info in ${tag}: `, JSON.parse(localStorage.getItem(`tag-${tag}`)))
-        return (JSON.parse(localStorage.getItem(`tag-${tag}`)));
-    } else {
-
-async function fetchAuthor() {
-    try {
-        const response = await fetch(`https://openlibrary.org/subjects/${tag}.json`);
-
-        if (!response.ok) {
-            throw new Error("Hmmm, I don't know this genre.");
-        }
-
-        const data = await response.json();
-        const bookTitles = data.works;
-        console.log(data.works);
-
-        bookTitles.forEach(title => {
-            console.log("title.authors[0] ", title.authors[0])
-            console.log([title.authors[0].name.toLowerCase(),title.authors[0].bio])
-            authorList.push([title.authors[0].name.toLowerCase(),title.authors[0].bio]);
-        });
-
-        localStorage.setItem(`tag-${tag}`,JSON.stringify(authorList));
-
-        console.log(authorList);
-        return authorList;
-    }
-
-    catch (error) {
-        console.error(error);
-    }
-}
-}
-}
-
-let tag = 'science';
-fetchAuthors(tag);
 
 
-function AfetchAuthors(tag) {
+function fetchAuthors(tag) {
     //tag ags like a genre here, so that below in the params string we create a {tag}
     //to filter the results to a genres
-    if (localStorage.getItem(`tag-${tag}`)) {
+
+    /* if (localStorage.getItem(`tag-${tag}`)) {
         //console.log(`local Storgage had info in ${tag}: `, JSON.parse(localStorage.getItem(`tag-${tag}`)))
         return (JSON.parse(localStorage.getItem(`tag-${tag}`)));
-    }
+    } */
 
     const limit = 150;
-    params = `${tag}.json?limit=${limit}&page=1`; //option to add parameters
+    params = `${tag}.json`; //option to add parameters
     fetchUrl = `https://openlibrary.org/subjects/${params}`
     //console.log("fetch authours url: ",fetchUrl);
     let authorList = [];
@@ -204,28 +168,27 @@ function AfetchAuthors(tag) {
         .then(function (data) {
             //console.log(`Had to run a fetch in Authours by tag ${tag} produces data: `,data);
             
-        
-            
             for (dataPoint of data.works) {
-                
-                const bio = fetchBiography(dataPoint.authors.name);
+                let name = dataPoint.authors[0].name.toLowerCase();
+                console.log(name);
                 authorList.push({
-                    name: dataPoint.authors[0].name,
-                    key: dataPoint.authors[0].key,
-                    bio : bio
+                    name: name,
+                    quotes : []
                 });
+                
             }
+            return authorList;
             
         })
         .then(function (data){
-            localStorage.setItem(`tag-${tag}`,JSON.stringify(authorList));
+            localStorage.setItem(`tag-${tag}`,JSON.stringify(data));
             //console.log("authorList in fetchAuthors: ",authorList);
             return authorList;
-
     })
-        
     };
 
+    let tag = 'science';
+    fetchAuthors(tag);
 //console.log("fetchAuthors run on  science",fetchAuthors("science"));
 //console.log("fetchAuthors run on love",fetchAuthors("love"));
 //console.log("fetchAuthors run on peace",fetchAuthors("peace"));
