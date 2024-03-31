@@ -19,32 +19,47 @@ const LIMIT = 150;
 
 
 const genres = fetchTags(); //fetches all tages from quoteable site
-
+$searchBar = $('#search-bs-class');
 $tagList = $('#tag-list'); //links a jquery opbject to the div holding buttons the user can select instead of searching
 
-$tagList.on('click',function(e) {
-    console.log("e-target:",e.target);
-}); //sets a function to handle the button clicks bubling up to the div taglist.
 
+//event handler that sets a function to handle the button clicks bubling up to the div taglist.
+$tagList.on('click',function(e) {
+    const genre = $(e.target).data('genre');
+    console.log("genre button clicked:",genre);
+    //this should trigger an event handler for listing the authourcards below
+    //the console log above is extracting the genre being clicked on.
+    console.log(`genre button clicked:,${genre} to be deleted`);
+    $searchBar.val(genre);
+    $(e.target).remove();
+    populateTagList($tagList,return5RandomGenres(genres));
+}); 
+
+
+console.log(return5RandomGenres(genres));
+populateTagList($tagList,return5RandomGenres(genres));
 
 //this function gets a 5 long random list from the whole genres list and appends a button for each of the 5 into the 
 //$tagList jquery div.
 
 function populateTagList(tagList,genres) {
-    const buttonNameList = return5RandomGenres(genres);
-    for (buttonName of buttonNameList) {
+    
+    tagList.empty();
+    for (buttonName of genres) {
         tagList.append(`<button data-genre="${buttonName}"class="flex-1 py-3 px-3 rounded-3xl w-full leading-7 bg-sky-100 hover:bg-sky-600 font-bold text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent shadow-sm">${buttonName}</button>`)
     }
-
-    function return5RandomGenres(genres) {
-        let arr = []
-    
-        for (let x = 0; x < 5; x++) {
-            arr.push(genres[Math.floor(Math.random() * genres.length) + 1]);
-        }
-        return arr;
-    }
+   
 }
+
+function return5RandomGenres(genres) {
+    let arr = []
+
+    for (let x = 0; x < 5; x++) {
+        arr.push(genres[Math.floor(Math.random() * genres.length) + 1]);
+    }
+    return arr;
+}
+
 
 
 function authorListsByGenre (genres) {
