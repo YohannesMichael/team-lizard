@@ -23,8 +23,16 @@ const genres = fetchTags(); //fetches all tages from quoteable site
 
 //this sets the jquery item for the search bar
 $searchBar = $('#search-bs-class');
+
 //this creates a jquery reference to the tagList below the search bar.
 $tagList = $('#tag-list'); 
+
+//this produces 5 random tags from the genre list under the search bar.
+
+populateTagList($tagList,return5RandomGenres(genres));
+
+//this function gets a 5 long random list from the whole genres list and appends a button for each of the 5 into the 
+//$tagList jquery div.
 
 //event handler that sets a function to handle the button clicks bubling up to the div taglist.
 $tagList.on('click',function(e) {
@@ -41,10 +49,7 @@ $tagList.on('click',function(e) {
     populateTagList($tagList,return5RandomGenres(genres));
 }); 
 
-//this produces 5 random tags from the genre list under the search bar.
-populateTagList($tagList,return5RandomGenres(genres));
-//this function gets a 5 long random list from the whole genres list and appends a button for each of the 5 into the 
-//$tagList jquery div.
+
 
 function populateTagList(tagList,genres) {
     
@@ -78,11 +83,11 @@ let authorList = [];
     for (x = 0; x < genres.length; x++) {
         authorList[x].authors.push(fetchAuthors(genres[0]));
     }
+    console.log("authour list by genre",authorList);
     return authorList;
+
 }
 
-
-//console.log("genres: ",genres);
 
 //console.log("get authors list by genres ", authorListsByGenre(genres));
 
@@ -144,8 +149,6 @@ function fetchTags(){
 ///search/authors?query=Einstein
 
 
-
-
 function fetchAuthors(tag) {
     //tag ags like a genre here, so that below in the params string we create a {tag}
     //to filter the results to a genres
@@ -158,7 +161,8 @@ function fetchAuthors(tag) {
     const limit = 150;
     params = `${tag}.json`; //option to add parameters
     fetchUrl = `https://openlibrary.org/subjects/${params}`
-    //console.log("fetch authours url: ",fetchUrl);
+    console.log("fetch authours url: ",fetchUrl);
+    
     let authorList = [];
     
     fetch(fetchUrl)
@@ -170,62 +174,52 @@ function fetchAuthors(tag) {
             
             for (dataPoint of data.works) {
                 let name = dataPoint.authors[0].name.toLowerCase();
-                console.log(name);
+                //console.log(name);
                 authorList.push({
                     name: name,
                     quotes : []
                 });
-                
             }
+            //console.log(authorList);
             return authorList;
             
         })
         .then(function (data){
             localStorage.setItem(`tag-${tag}`,JSON.stringify(data));
-            //console.log("authorList in fetchAuthors: ",authorList);
             return authorList;
     })
+    return authorList;
     };
 
+    
+
     let tag = 'science';
-    fetchAuthors(tag);
+    let nameScience = fetchAuthors(tag);
+    //console.log(nameScience);
+    
+
+
+function fullList (list) {
+        let fullListAuthorAndQuotes = [];
+        //console.log("full list [2]: ",list);
+        for (let x=0; x < list.length; x++) {
+            console.log(fetchQuotes(list[x].name));
+            list[x].quotes = fetchQuotes(list[x].name);
+        }
+        console.log(list);
+        return list;
+    }
+
+console.log(fullList(nameScience));
+
+//    console.log(fullList(aList));
+
 //console.log("fetchAuthors run on  science",fetchAuthors("science"));
 //console.log("fetchAuthors run on love",fetchAuthors("love"));
 //console.log("fetchAuthors run on peace",fetchAuthors("peace"));
 //console.log("fetchAuthors run on phoilosophy",fetchAuthors("philosophy"));
     
-function fetchBiography(key) {
-    params = ""; //option to add parameters
-    fetchUrl = `https://openlibrary.org/${key}.json?${params}`;
-    bioReturn = "";
-    
-    let headers = new Headers();
 
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    headers.append('Origin','http://localhost:3000');
-
-
-    fetch(fetchUrl)
-      .then(function (response) {    
-        return response.json();
-    })
-    .then(function (data) {
-        //console.log("fetchbiography: data ", data);
-        //console.log("name is", data.name);
-        //console.log("type of bio", typeof(data.bio));
-        if (typeof(data.bio) == String) {
-        //console.log("bio.value not there");
-        bioReturn = data.bio;
-     }  else {
-        //console.log("bio.value there",data.bio.value);
-        bioReturn = data.bio.value;
-     }
-     //console.log("bio return", bioReturn);
-     
-  });
-  return bioReturn;
-}
 
 //console.log("console fetch bio: ",fetchBiography('OL25342A'));
 
@@ -257,10 +251,10 @@ function fetchQuotes(author) {
     return fetchQuotesList;
 }
 
-/* console.log('fetch quotes', fetchQuotes('ben-elton'));
-console.log('fetch quotes', fetchQuotes('alexandre-dumas'));
-console.log('fetch quotes', fetchQuotes('william-shakespeare'));
- */
+//console.log('fetch quotes', fetchQuotes('ben-elton'));
+//console.log('fetch quotes', fetchQuotes('alexandre-dumas'));
+//console.log('fetch quotes', fetchQuotes('william-shakespeare'));
+
 
 //fetch all tags from QUOTES_URL
 //console.log(fetchTags()); 
@@ -295,7 +289,6 @@ function createAuthorCard (author) {
         weatherInHomeTown: ""
     }
 
-
     $authorCard = $(`<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-10"></div>`);
     
     $authorInnerContainer = $(`<div class="max-w-xs mx-auto md:ml-0"></div>`);
@@ -315,8 +308,6 @@ function createAuthorCard (author) {
 
 }
 
-
-//
 function getAuthorsFromWorks (works) {
     //recieves works from an object generated by fetchAuthors(tag) it 
     //recieves a list of authors related to that tag as an array of {name,key} 
@@ -353,3 +344,38 @@ function getAuthorsFromWorks (works) {
 
 //console.log(getAuthorsFromWorks(fetchAuthors('science'))); 
 //console.log(getAuthorsFromWorks(fetchAuthors('comedy'))); 
+
+
+
+function fetchBiography(key) {
+    params = ""; //option to add parameters
+    fetchUrl = `https://openlibrary.org/${key}.json?${params}`;
+    bioReturn = "";
+    
+    let headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    headers.append('Origin','http://localhost:3000');
+
+
+    fetch(fetchUrl)
+      .then(function (response) {    
+        return response.json();
+    })
+    .then(function (data) {
+        //console.log("fetchbiography: data ", data);
+        //console.log("name is", data.name);
+        //console.log("type of bio", typeof(data.bio));
+        if (typeof(data.bio) == String) {
+        //console.log("bio.value not there");
+        bioReturn = data.bio;
+     }  else {
+        //console.log("bio.value there",data.bio.value);
+        bioReturn = data.bio.value;
+     }
+     //console.log("bio return", bioReturn);
+     
+  });
+  return bioReturn;
+}
