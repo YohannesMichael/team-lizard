@@ -149,7 +149,7 @@ function fetchTags(){
 ///search/authors?query=Einstein
 
 
-function fetchAuthors(tag) {
+async function fetchAuthors(tag) {
     //tag ags like a genre here, so that below in the params string we create a {tag}
     //to filter the results to a genres
 
@@ -164,55 +164,49 @@ function fetchAuthors(tag) {
     console.log("fetch authours url: ",fetchUrl);
     
     let authorList = [];
-    
-    fetch(fetchUrl)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            //console.log(`Had to run a fetch in Authours by tag ${tag} produces data: `,data);
-            
-            for (dataPoint of data.works) {
-                let name = dataPoint.authors[0].name.toLowerCase();
-                //console.log(name);
-                authorList.push({
-                    name: name,
-                    quotes : []
-                });
-            }
-            //console.log(authorList);
-            return authorList;
-            
-        })
-        .then(function (data){
-            localStorage.setItem(`tag-${tag}`,JSON.stringify(data));
-            return authorList;
-    })
-    return authorList;
-    };
+    const response =  await fetch(fetchUrl);
+    const data = await response.json();        
+    for (dataPoint of data.works) {
+        let name = dataPoint.authors[0].name.toLowerCase();
+        //console.log(name);
+        authorList.push(name);
+    }
+    //console.log(authorList);
+    localStorage.setItem(`tag-${tag}`,JSON.stringify(data));
+    return authorList; 
+};
 
     
-
+async function test() {
     let tag = 'science';
-    let nameScience = fetchAuthors(tag);
-    //console.log(nameScience);
+    let nameScience = await fetchAuthors(tag);
+    console.log("name science: ",nameScience);
+    //console.log("full list called: ", await fullList(nameScience));
+    renderAuthorList(await fullList(nameScience));
+}
+
+test();
     
+// full list takes arra of names. outputs a 2 dimentional array of {name:name,quotes:[quotes]}
 
+async function fullList (list) {
+        let returnArray = [];
+        console.log("full li: ",list);
 
-function fullList (list) {
-        let fullListAuthorAndQuotes = [];
-        //console.log("full list [2]: ",list);
-        for (let x=0; x < list.length; x++) {
-            console.log(fetchQuotes(list[x].name));
-            list[x].quotes = fetchQuotes(list[x].name);
+        for (let x = 0 ; x < list.length ; x++) {
+            returnArray.push({
+                name: list[x],
+                quotes: await fetchQuotes(list[x])
+            })
+            
         }
-        console.log(list);
-        return list;
+        
+        return returnArray;
     }
 
-console.log(fullList(nameScience));
 
-//    console.log(fullList(aList));
+
+
 
 //console.log("fetchAuthors run on  science",fetchAuthors("science"));
 //console.log("fetchAuthors run on love",fetchAuthors("love"));
@@ -226,34 +220,24 @@ console.log(fullList(nameScience));
 
 //this function needs to have an author slug which is part of the autor JSON object.
 
-function fetchQuotes(author) {
+async function fetchQuotes(author) {
     fetchUrl = `https://api.quotable.io/quotes?author=${author}`;
     let fetchQuotesList =[];
 
-    fetch(fetchUrl)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        //console.log("fetchQuotesData results: ",data.results);
-        for (dataPoint of data.results) {
-            //console.log(dataPoint.content);
-            fetchQuotesList.push(dataPoint.content);
-        }
-        return fetchQuotesList
-    }).then(function (data){
-        //console.log(data);
+    const response = await fetch(fetchUrl)
+    const data = await response.json();
+    for (dataPoint of data.results) {
+        //console.log(dataPoint.content);
+        fetchQuotesList.push(dataPoint.content);
+    }
         localStorage.setItem(`quotesList-${author}`,JSON.stringify(data))
-        return data;
-    }).catch((response) => {
-        //console.log(response.status,response.statusText)
-    }); 
-    return fetchQuotesList;
-}
+        return fetchQuotesList;
+        
+    }
 
-//console.log('fetch quotes', fetchQuotes('ben-elton'));
-//console.log('fetch quotes', fetchQuotes('alexandre-dumas'));
-//console.log('fetch quotes', fetchQuotes('william-shakespeare'));
+//console.log('fetch quotes', fetchQuotes('ben elton'));
+//console.log('fetch quotes', fetchQuotes('aldous huxley'));
+//console.log('fetch quotes', fetchQuotes('william shakespeare'));
 
 
 //fetch all tags from QUOTES_URL
@@ -269,6 +253,8 @@ function renderAuthorList(authorList) {
         $authors.append(createAuthorCard(author));
     }
 }
+
+
 
 //console.log("calling getAuthorsFromWorks(fetchAuthors('science')): ", getAuthorsFromWorks(fetchAuthors('science')));
 //console.log("calling renderAuthorList(getAuthorsFromWorks(fetchAuthors('science'))) ", renderAuthorList(getAuthorsFromWorks(fetchAuthors('science'))));
