@@ -1,9 +1,9 @@
 @charset "utf-8";
 /* CSS Document */
 /* =============================================================
- 	First Name		: Strahinja     					    
- 	Last Name		: Popovic					            
- 	Developer Name  : CodexDeveloper			        
+ 	First Name		  : Strahinja     					    
+ 	Last Name		    : Popovic					            
+ 	Developer Name  : codeXdeveloper			        
  	WebMaster Email	: spope.mails@gmail.com               
  ============================================================== */
 
@@ -12,18 +12,23 @@
 /* ***************************************************************************************** */
 
 :root {
+  --aqua: aqua;
   --dark: black;
   --light: white; 
+  --error: rgb(170, 28, 28);
   --gray: rgb(240, 240, 240);
   --gray-dark: rgb(23,23,23);
-  --electron-blue: rgb(8,129,209);
   --naval-blue: rgba(1,33,55,1.00);
+  --electron-blue: rgb(50, 164, 240);
+  --custom-gray: rgb(175, 191, 207);
   --light-web-blue: rgb(12, 209, 235);
 }
 
 body {
+  width: 70%;
+  margin: 0 auto;
   font-size: 24px;
-  background-color: var(--gray);
+  background-color: var(--light);
   font-family: "Roboto", sans-serif;
 }
 
@@ -31,16 +36,17 @@ div#header {
   width: 100%;
   height: auto;
   margin: 0 auto;
-  background-color: var(--naval-blue);
+  background-color: var(--light);
 }
 
 div#header section#header-main {
   width: 100%;
-  font-size: 3vw;
-  line-height: 1.5;
+  line-height: 2;
+  font-size: 80px;
   text-align: center;
   font-weight: bolder;
-  color: var(--light-web-blue);
+  letter-spacing: 3px;
+  color: var(--naval-blue);
   font-family: "Roboto", sans-serif;
 }
 
@@ -52,55 +58,145 @@ div#top {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: row;
+  background-color: var(--gray);
 }
 
 div#top section#input-book {
   height: auto;
-  margin: 0 0.5vw 0 1vw;
-  width: calc(20% - 1.5vw);
+  margin: auto auto;
+  width: calc(30% - 1.5vw);
   background-color: var(--gray);
-  border-bottom: 1px solid var(--electron-blue);
 }
 
 div#top section#current-book {
-  width: 80%;
+  width: 70%;
   height: auto;
   background-color: var(--gray);
 }
 
 div#top section#current-book section#sub-section {
-  height: 300px;
+  height: 450px;
+  display: flex;
   margin-top: 1vw;
   margin-left: 0.5vw;
-  border-radius:  5px;
+  border-radius: 5px;
+  flex-direction: row;
   width: calc(100% - 1.5vw);
   background-color: var(--gray);
-  border: 2px solid var(--electron-blue);
+  border: 3px solid var(--gray-dark);
+}
+
+div#top section#current-book section#sub-section section#sub-sub,
+div#top section#current-book section#sub-section section#sub-sub-2 {
+  display: flex;
+  margin: 1vw auto;
+  border-radius: 10px;
+  flex-direction: column ;
+  width: calc(50% - 1.5vw);
+  height: calc(450px - 2vw);
+  border: 3px solid var(--naval-blue);
+  background-color: var(--custom-gray);
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-cover,
+div#top section#current-book section#sub-section section#sub-sub div#author-img {
+  padding: 5px;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#current-book,
+div#top section#current-book section#sub-section section#sub-sub div#current-author {
+  font-size: x-large;
+  font-weight: bolder;
+  padding: 1vw 0 0 1vw;
+  white-space: pre-line;
+  font-family: "Roboto", sans-serif;
 }
 
 div#middle {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
+  background-color: var(--gray);
 }
 
 div#middle section#book-list {
-  height: 300px;
+  height: auto;
   display: flex;
   border-radius: 5px;
-  flex-direction: row;
-  margin: 1vw 1vw 1vw 1vw;
+  flex-direction: column;
   width: calc(100% - 2vw);
+  margin: 1vw 1vw 1vw 1vw;
   background-color: var(--gray);
-  border: 1px solid var(--electron-blue);
+  border: 3px solid var(--gray-dark);
+}
+
+div#middle section#book-list section#book-1,
+div#middle section#book-list section#book-2,
+div#middle section#book-list section#book-3,
+div#middle section#book-list section#book-4,
+div#middle section#book-list section#book-5,
+div#middle section#book-list section#book-6 {
+  display: flex;
+  margin: 1vw auto;
+  font-size: medium;
+  font-weight: bold;
+  width: 50%;
+  border-radius: 10px;
+  flex-direction: column;
+  height: 400px;
+  color: var(--naval-blue);
+  font-family: "Roboto", sans-serif;
+  border: 3px solid var(--naval-blue);
+  background-color: var(--custom-gray);
+}
+/*
+div#middle section#book-list section#book-1,
+div#middle section#book-list section#book-6 {
+  width: calc(100% / 6 - 1vw - 0.5vw);
+}
+
+div#middle section#book-list section#book-1 {
+  margin-left: 1vw;
+  margin-right: 0.5vw;
+}
+
+div#middle section#book-list section#book-6 {
+  margin-right: 1vw;
+  margin-left: 0.5vw;
+}
+
+div#middle section#book-list section#book-2,
+div#middle section#book-list section#book-3,
+div#middle section#book-list section#book-4,
+div#middle section#book-list section#book-5 {
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+  width: calc(100% / 6 - 1vw);
+}
+*/
+div#book-1-desc,
+div#book-2-desc,
+div#book-3-desc,
+div#book-4-desc,
+div#book-5-desc {
+  padding: 1vw 0 0 1vw;
+  white-space: pre-line;
+}
+
+div#book-1-cover,
+div#book-2-cover,
+div#book-3-cover,
+div#book-4-cover,
+div#book-5-cover {
+  padding-top: 0.7vw;
 }
 
 label {
   font-size: 1vw;
   font-weight: bolder;
+  margin: 0 0 0 10%;
   color: var(--naval-blue);
-  margin: 2vw 0 0.5vw 10%;
   font-family: "Roboto", sans-serif;
 }
 
@@ -108,11 +204,12 @@ input[type=text] {
   width: 80%;
   height: 2.5vw;
   margin: 0 1vw;
+  font-size: 1vw;
   border-radius: 5px;
+  margin: 1vw 10% 0.5vw 10%;
   padding: 5px 5px 5px 5px;
-  margin: 0.5vw 10% 0 10%;
   font-family: "Roboto", sans-serif;
-  border: 2px solid var(--electron-blue);
+  border: 2px solid var(--gray-dark);
 }
 
 input::placeholder {
@@ -120,33 +217,89 @@ input::placeholder {
   line-height: 1.5;
 }
 
-button#submit {
+button#submit, button#clear {
   width: 80%;
-  height: 2.5vw;
+  height: 3vw;
   font-size: 1.5vw;
   border-radius: 5px;
   font-weight: bolder;
-  color: var(--light);
-  margin: 0.5vw 10% 2vw 10%;
+  margin: 0 10% 1vw 10%;
+  color: var(--naval-blue);
+  background-color: var(--gray);
   font-family: "Roboto", sans-serif;
-  background-color: var(--naval-blue);
+  border: 2px solid var(--gray-dark);
 }
 
-p#error-message {
-  font-size: 1vw; 
-  line-height: 1.5;
+button#submit {
+  margin-top: 0.5vw;
+}
+
+div#middle section#book-list section#book-1 p,
+div#middle section#book-list section#book-2 p,
+div#middle section#book-list section#book-3 p,
+div#middle section#book-list section#book-4 p,
+div#middle section#book-list section#book-5 p,
+div#middle section#book-list section#book-6 p {
   margin-left: 10%;
+  line-height: 1.5;
+  font-size: 1.2vw; 
   font-weight: bold; 
-  color: rgb(170, 28, 28); 
+  color: var(--error); 
+  font-family: "Roboto", sans-serif;
+}
+
+span#shevron {
+  font-family: 'furore', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button#submit:hover, button#clear:hover {
+  color: var(--naval-blue);
+  border: 3px solid var(--naval-blue);
+}
+
+div#error-message {
+  margin-left: 10%;
+  line-height: 1.5;
+}
+
+div#error-message p {
+  font-size: 1.2vw; 
+  font-weight: bold; 
+  color: var(--error); 
+  font-family: "Roboto", sans-serif;
 }
 
 footer#bottom {
   width: 100%;
-  height: 300px;
-  background-color: var(--gray-dark);
+  height: 350px;
+  line-height: 2;
+  text-align: left;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--gray);
 }
 
-table tr th, td {
-    padding: 5px 5px 5px 5px;
-    font-family: "Roboto", sans-serif;
+footer#bottom p span {
+  color: var(--electron-blue);
+}
+
+footer#bottom p {
+  left: 1vw;
+  display: block;
+  font-size: 18px;
+  text-align: left;
+  font-weight: bold;
+  margin: 0 1vw 0 1vw;
+  letter-spacing: 1px;
+  color: var(--naval-blue);
+}
+
+footer#bottom p:first-child {
+  font-size: 3vw;
+  margin-top: 20px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+}
+
+footer#bottom p:last-child {
+  bottom: 50px;
 }
