@@ -4,9 +4,6 @@ const searchBtn = document.getElementById('search-button');
 
 // Define a function to create the author list based on user input
 async function createAuthorList() {
-    // Return an asynchronous function that fetches data and displays authors
-    // return async function () {
-    // Initialize an array to store author names
     let authorArr = [];
     // Clear the authors container before displaying new authors
     authorsContainer.textContent = '';
