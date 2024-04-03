@@ -24,6 +24,8 @@ const genres = fetchTags(); //fetches all tages from quoteable site
 //this sets the jquery item for the search bar
 $searchBar = $('#search-bs-class');
 
+$searchButton = $('#search-btn');
+
 //this creates a jquery reference to the tagList below the search bar.
 $tagList = $('#tag-list'); 
 
@@ -37,19 +39,19 @@ populateTagList($tagList,return5RandomGenres(genres));
 //event handler that sets a function to handle the button clicks bubling up to the div taglist.
 $tagList.on('click',function(e) {
     const genre = $(e.target).data('genre');
-    console.log("genre button clicked:",genre);
-    //this should trigger an event handler for listing the authourcards below
-    //the console log above is extracting the genre being clicked on.
-    console.log(`genre button clicked:,${genre} to be deleted`);
-    //put the value in the search bar.
+    //set the search bar value
     $searchBar.val(genre);
+    //trigger a search
+    handleSearch($searchBar.val());
     //delete the button just pressed
     $(e.target).remove();
     //repolulate the taglist.
     populateTagList($tagList,return5RandomGenres(genres));
 }); 
 
-
+$searchButton.on('click',function(e) {
+    handleSearch($searchBar.val());
+});
 
 function populateTagList(tagList,genres) {
     
@@ -165,7 +167,8 @@ async function fetchAuthors(tag) {
     
     let authorList = [];
     const response =  await fetch(fetchUrl);
-    const data = await response.json();        
+    const data = await response.json();  
+    console.log("data.works: ", data.works);      
     for (dataPoint of data.works) {
         let name = dataPoint.authors[0].name.toLowerCase();
         //console.log(name);
@@ -177,6 +180,15 @@ async function fetchAuthors(tag) {
 };
 
     
+async function handleSearch() {
+    const term = $searchBar.val();
+    console.log("term:",term)
+    const list = await(fetchQuotes(fetchAuthors(term)));
+    renderAuthorList(list);
+}
+
+handleSearch();
+
 async function test() {
     let tag = 'science';
     let nameScience = await fetchAuthors(tag);
@@ -185,11 +197,11 @@ async function test() {
     renderAuthorList(await fullList(nameScience));
 }
 
-test();
+//test();
     
 // full list takes arra of names. outputs a 2 dimentional array of {name:name,quotes:[quotes]}
 
-async function fullList (list) {
+async function fetchQuotes (list) {
         let returnArray = [];
         console.log("full li: ",list);
 
@@ -218,7 +230,7 @@ async function fullList (list) {
 //console.log("console fetch bio: ",fetchBiography('OL25342A'));
 
 
-//this function needs to have an author slug which is part of the autor JSON object.
+//
 
 async function fetchQuotes(author) {
     fetchUrl = `https://api.quotable.io/quotes?author=${author}`;
@@ -226,8 +238,9 @@ async function fetchQuotes(author) {
 
     const response = await fetch(fetchUrl)
     const data = await response.json();
+
     for (dataPoint of data.results) {
-        //console.log(dataPoint.content);
+        console.log(dataPoint.content);
         fetchQuotesList.push(dataPoint.content);
     }
         localStorage.setItem(`quotesList-${author}`,JSON.stringify(data))
@@ -266,13 +279,7 @@ function createAuthorCard (author) {
 
     const blankAuthor = {
         name: "",
-        biography: "",
-        quotes: [
-            "this is the day",
-            "anothher quote"
-        ],
-        birthPlace: "",
-        weatherInHomeTown: ""
+        quotes: []
     }
 
     $authorCard = $(`<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-10"></div>`);
