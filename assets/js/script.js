@@ -24,6 +24,8 @@ const genres = fetchTags(); //fetches all tages from quoteable site
 //this sets the jquery item for the search bar
 $searchBar = $('#search-bs-class');
 
+$searchButton = $('#search-btn');
+
 //this creates a jquery reference to the tagList below the search bar.
 $tagList = $('#tag-list'); 
 
@@ -37,19 +39,19 @@ populateTagList($tagList,return5RandomGenres(genres));
 //event handler that sets a function to handle the button clicks bubling up to the div taglist.
 $tagList.on('click',function(e) {
     const genre = $(e.target).data('genre');
-    console.log("genre button clicked:",genre);
-    //this should trigger an event handler for listing the authourcards below
-    //the console log above is extracting the genre being clicked on.
-    console.log(`genre button clicked:,${genre} to be deleted`);
-    //put the value in the search bar.
+    //set the search bar value
     $searchBar.val(genre);
+    //trigger a search
+    handleSearch($searchBar.val());
     //delete the button just pressed
     $(e.target).remove();
     //repolulate the taglist.
     populateTagList($tagList,return5RandomGenres(genres));
 }); 
 
-
+$searchButton.on('click',function(e) {
+    handleSearch($searchBar.val());
+});
 
 function populateTagList(tagList,genres) {
     
@@ -83,7 +85,7 @@ let authorList = [];
     for (x = 0; x < genres.length; x++) {
         authorList[x].authors.push(fetchAuthors(genres[0]));
     }
-    console.log("authour list by genre",authorList);
+    //console.log("authour list by genre",authorList);
     return authorList;
 
 }
@@ -132,7 +134,7 @@ function fetchTags(){
     });
 } else {
     tagList = JSON.parse(localStorage.getItem('tagList'));
-    console.log("tagList found in localstorage:");
+    //console.log("tagList found in localstorage:");
 }
   
   return tagList;
@@ -157,18 +159,19 @@ async function fetchAuthors(tag) {
         //console.log(`local Storgage had info in ${tag}: `, JSON.parse(localStorage.getItem(`tag-${tag}`)))
         return (JSON.parse(localStorage.getItem(`tag-${tag}`)));
     } */
-
+    //console.log("fetch Authors recieved a tag: ",tag);
     const limit = 150;
     params = `${tag}.json`; //option to add parameters
     fetchUrl = `https://openlibrary.org/subjects/${params}`
-    console.log("fetch authours url: ",fetchUrl);
+    //console.log("fetch authours url: ",fetchUrl);
     
     let authorList = [];
     const response =  await fetch(fetchUrl);
-    const data = await response.json();        
+    const data = await response.json();  
+    //console.log("data.works: ", data.works);      
     for (dataPoint of data.works) {
         let name = dataPoint.authors[0].name.toLowerCase();
-        //console.log(name);
+        //console.log(dataPoint.authors[0].name.toLowerCase());
         authorList.push(name);
     }
     //console.log(authorList);
@@ -176,28 +179,46 @@ async function fetchAuthors(tag) {
     return authorList; 
 };
 
-    
-async function test() {
+//similar to test code funciton below.    
+async function handleSearch() {
+    const term = $searchBar.val();
+    console.log("term:",term)
+    const authorList = await fetchAuthors(term);
+    const list = await(fetchQuotesToAuthor(authorList));
+    renderAuthorList(list);
+}
+
+/* async function test() {
     let tag = 'science';
     let nameScience = await fetchAuthors(tag);
     console.log("name science: ",nameScience);
     //console.log("full list called: ", await fullList(nameScience));
     renderAuthorList(await fullList(nameScience));
-}
+} */
 
-test();
+//test();
     
+
+
+//Helper
+function nameToSlug (name) {
+    let newName = name.replace(" ","-");
+    newName = newName.replace(",","");
+    return newName.replace(".","");
+}
+//
 // full list takes arra of names. outputs a 2 dimentional array of {name:name,quotes:[quotes]}
 
-async function fullList (list) {
+async function fetchQuotesToAuthor (list) {
         let returnArray = [];
         console.log("full li: ",list);
 
         for (let x = 0 ; x < list.length ; x++) {
             returnArray.push({
                 name: list[x],
-                quotes: await fetchQuotes(list[x])
+                quotes: await fetchQuotes(nameToSlug (list[x]))
             })
+            console.log(returnArray[x])
             
         }
         
@@ -218,14 +239,14 @@ async function fullList (list) {
 //console.log("console fetch bio: ",fetchBiography('OL25342A'));
 
 
-//this function needs to have an author slug which is part of the autor JSON object.
 
 async function fetchQuotes(author) {
-    fetchUrl = `https://api.quotable.io/quotes?author=${author}`;
+    fetchUrl = `https://api.quotable.io/quotes?author=${nameToSlug(author)}`;
     let fetchQuotesList =[];
-
+    //console.log("fetch quotes url", fetchUrl);
     const response = await fetch(fetchUrl)
     const data = await response.json();
+
     for (dataPoint of data.results) {
         //console.log(dataPoint.content);
         fetchQuotesList.push(dataPoint.content);
@@ -250,7 +271,7 @@ $authors = $("#author-container").addClass('container');
 function renderAuthorList(authorList) {
     //console.log("renderAuthourList called",authorList);
     for (author of authorList) {
-        $authors.append(createAuthorCard(author));
+        $authors.append(createAuthorCard(author,$authors));
     }
 }
 
@@ -259,38 +280,50 @@ function renderAuthorList(authorList) {
 //console.log("calling getAuthorsFromWorks(fetchAuthors('science')): ", getAuthorsFromWorks(fetchAuthors('science')));
 //console.log("calling renderAuthorList(getAuthorsFromWorks(fetchAuthors('science'))) ", renderAuthorList(getAuthorsFromWorks(fetchAuthors('science'))));
 
-function createAuthorCard (author) {
+function renderQuotesList(quotesArray,author) {
+    console.log("quotes Array",quotesArray);
+    console.log("quotes Array author",author);
+    $returnElement = $(`<div id="quotes-by-${nameToSlug(author)}"></div>`);
+    for (let x = 0; x < quotesArray.length ; x++) {
+        const $quote = $(`<p id="quote-${author}-${x}" class="quote mb-4 gap-y-3 leading-loose italic bold text-coolGray-500 font-medium">${quotesArray[x]}</p>`);
+        $returnElement.append($quote);
+        console.log($returnElement);
+    }
+
+    
+
+    console.log("return element: ",$returnElement);
+    return $returnElement;
+}
+
+async function createAuthorCard (author,$appendTo) {
     //this needs developing, by taking the code out from getAuthourWorks function and putting it in 
     //here we get an authorcard we can append to the authorcontainer div
     // The author object should be name, biography, quotes list, place of birth, weather in place of birth, etc.
 
     const blankAuthor = {
         name: "",
-        biography: "",
-        quotes: [
-            "this is the day",
-            "anothher quote"
-        ],
-        birthPlace: "",
-        weatherInHomeTown: ""
+        quotes: []
     }
-
-    $authorCard = $(`<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-10"></div>`);
+    const list = await renderQuotesList(author.quotes,author.name);
     
-    $authorInnerContainer = $(`<div class="max-w-xs mx-auto md:ml-0"></div>`);
+    let $authorCard = $(`<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-10"></div>`);
+    let $authorInnerContainer = $(`<div class="max-w-xs mx-auto md:ml-0"></div>`);
+    let $authorImage = $(`<img class="w-24 h-24 mb-6 rounded-full" src="https://t4.ftcdn.net/jpg/05/95/83/67/360_F_595836741_8hyycaWwQphpA0vaMsuoce7tRr8xPKtP.jpg" alt="">`);
+    let $authorName = $(`<h3 class="mb-1 text-lg text-coolGray-800 font-semibold">${author.name}</h3>`);
+    let $authorQuotesTitle = $(`<span class="inline-block mb-4 text-lg font-medium text-green-500">Quotes</span>`)
+    let $authorQuotesText = $(`<div id="${nameToSlug(author.name)}"></div>`)
+    for (let x = 0 ; x < list.length; x++) {
+    $authorQuotesText.append(list[x])
+    }
     
-    $authorImage = $(`<img class="w-24 h-24 mb-6 rounded-full" src="https://t4.ftcdn.net/jpg/05/95/83/67/360_F_595836741_8hyycaWwQphpA0vaMsuoce7tRr8xPKtP.jpg" alt="">`);
-    $authorName = $(`<h3 class="mb-1 text-lg text-coolGray-800 font-semibold">${author.name}</h3>`);
-    $authorBiographyTitle = $(`<span class="inline-block mb-4 text-lg font-medium text-green-500">Biography</span>`)
-    $authorBiographyText = $(`<p class="mb-4 text-coolGray-500 font-medium">${author.bio}</p>`)
-        $authorInnerContainer.append($authorImage);
-        $authorInnerContainer.append($authorName);
-        $authorInnerContainer.append($authorBiographyTitle);
-        $authorInnerContainer.append($authorBiographyText);
-
+    $authorInnerContainer.append($authorImage);
+    $authorInnerContainer.append($authorName);
+    $authorInnerContainer.append($authorQuotesTitle);
+    $authorInnerContainer.append($authorQuotesText);
     $authorCard.append($authorInnerContainer);
+    $appendTo.append($authorCard);
     
-    return $authorCard;
 
 }
 
@@ -316,7 +349,7 @@ function getAuthorsFromWorks (works) {
             })
     
         }
-    console.log("getAuthorsFromWorks Array end: ",authorsArray);
+    //console.log("getAuthorsFromWorks Array end: ",authorsArray);
     return authorsArray;
 }
 
@@ -365,3 +398,5 @@ function fetchBiography(key) {
   });
   return bioReturn;
 }
+
+
