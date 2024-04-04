@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Embed Google Roboto Font Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/google-font.css" />
+    <!-- Favicon added to the site main search bar -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon/b-favicon.png" />
+    <!-- Main style applied to the website elements through assets/css/style.css-->
+    <link rel="stylesheet" type="text/css" href="./assets/css/book.css" />
+    <!-- Default base style alocated at rest.css -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" />
+    <title>Home | Book-API</title>
+</head>
+
+<body>
+    <div id="format">
+    <div id="header">
+        <section id="header-main">OpenLibrary-<span>API</span></section>
+    </div>
+    <div id="top">
+        <section id="input-book">
+            <label for="book">Search for a Book ( * )</label>
+            <input type="text" id="book" name="book" placeholder="Insert name of the book" autocomplete="book"
+                required />
+            <div id="error-message"></div>
+            <button type="button" id="submit" name="submit" value="">Book-search<span id="shevron">
+                    >>></span></button>
+            <button type="button" id="clear" name="clear" value="">Clear-data</button>
+        </section>
+        <section id="current-book">
+            <section id="sub-section">
+                <section id="sub-sub">
+                    <div id="book-cover"></div>
+                    <div id="book-current"></div>
+                </section>
+                <section id="sub-sub-2">
+                    <div id="author-img"></div>
+                    <div id="author-current"></div>
+                </section>
+            </section>
+        </section>
+    </div>
+    <div id="middle">
+        <section id="book-list">
+            <section id="book-1">
+                <div id="book-1-cover"></div>
+                <div id="book-1-desc"></div>
+            </section>
+            <section id="book-2">
+                <div id="book-2-cover"></div>
+                <div id="book-2-desc"></div>
+            </section>
+            <section id="book-3">
+                <div id="book-3-cover"></div>
+                <div id="book-3-desc"></div>
+            </section>
+            <section id="book-4">
+                <div id="book-4-cover"></div>
+                <div id="book-4-desc"></div>
+            </section>
+            <section id="book-5">
+                <div id="book-5-cover"></div>
+                <div id="book-5-desc"></div>
+            </section>
+            <section id="book-6">
+                <div id="book-6-cover"></div>
+                <div id="book-6-desc"></div>
+            </section>
+        </section>
+    </div>
+    </div>
+    <footer id="bottom">
+        <p>Book-<span>API</span></p>
+        <p>Copyright&copy;
+            <script
+                type="text/javascript"> var date = new Date(); var year = date.getFullYear(); document.write(year);</script>
+            codeXdeveloper. All rights reserved.
+        </p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="./assets/js/book.js"></script>
+</body>
+
+</html>
