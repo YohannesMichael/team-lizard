@@ -244,7 +244,7 @@ async function fetchQuotes(author) {
     } else {
     const response = await fetch(fetchUrl)
     const data = await response.json();
-    
+    fetchQuotesList = [];
     if (data.results.length) {
         for (dataPoint of data.results) {
             //console.log(dataPoint.content);
@@ -253,6 +253,7 @@ async function fetchQuotes(author) {
     } else {
         fetchQuotesList = ["no quotes found"];    
     }
+    console.log("fetch author results in: ", fetchQuotesList);
     localStorage.setItem(`author-quotes-${author}`,JSON.stringify(fetchQuotesList));
     return fetchQuotesList;
 }
