@@ -106,7 +106,7 @@ function fetchTags() {
 
     if (!localStorage.getItem('tagList')) {
 
-        params = "?limit=150"; //option to add parameters
+        params = "?limit=50"; //option to add parameters
         fetchUrl = `${QUOTABLE_TAGS_URL}${params}`;
         let tagList = [];
         let headers = new Headers();
@@ -160,7 +160,7 @@ async function fetchAuthors(tag) {
         return (JSON.parse(localStorage.getItem(`tag-${tag}`)));
     } */
     //console.log("fetch Authors recieved a tag: ",tag);
-    const limit = 150;
+    const limit = 50;
     params = `${tag}.json`; //option to add parameters
     fetchUrl = `https://openlibrary.org/subjects/${params}`
     //console.log("fetch authours url: ",fetchUrl);
@@ -323,6 +323,7 @@ async function createAuthorCard(author, $appendTo) {
     $authorInnerContainer.append($authorQuotesText);
     $authorCard.append($authorInnerContainer);
     $appendTo.append($authorCard);
+
 
 
 }

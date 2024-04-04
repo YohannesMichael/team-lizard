@@ -5,22 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class=" bg-gradient-to-r from-cyan-500 to-blue-500">
-  <header class="py-4  h-26 w-full text-3xl font-mono text-center">
-    <img class="w-1/6 mx-auto rounded-full" src="./assets/images/litscape.png">
-    <h2 class="w-1/6 text-center h-20 mx-auto my-10">Litscape</h2>
-    <h4 class=""></h4>
+  <header class="py-4 w-full text-3xl font-mono text-center">
+    <img class="w-1/6 mx-auto rounded-lg mb-6" src="./assets/images/litscape.png">
+    <h2 class="mb-5">Litscape</h2>
     <!-- add a dark/light toggle -->
   </header>
 
   <div class=" flex flex-wrap mx-3 mb-10 px-12">
     <div class="w-full md:w-2/3 mb-2 md:mb-0 px-3">
       <input id="search-bs-class"
-        class="appearance-none block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-200 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
+        class="appearance-none capitalize block w-full py-3 px-4 leading-tight text-gray-700 bg-gray-200 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none"
         type="text" placeholder="Search for a genre" value="">
     </div>
     <div class="w-full md:w-1/3 px-3">
@@ -33,7 +36,7 @@
   <div class="flex flex-wrap justify-around mx-20 my-6 h-auto" id="tag-list"></div>
 
 
-  <section class="relative isolate overflow-hidden mx-20 bg-white px-6 py-24 sm:py-32 lg:px-8">
+  <section class="relative overflow-hidden mx-20 rounded-[40px] bg-white px-6 pt-50 py-8">
     <div
       class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20">
     </div>
@@ -50,14 +53,15 @@
         <section class="bg-white"
           style="background-image: url('flex-ui-assets/elements/pattern-white.svg'); background-position: center;">
           <div class="container px-1 mx-auto">
-            <span
-              class="inline-block py-px px-2 mb-4 text-xs leading-5 text-green-500 bg-green-100 font-medium uppercase rounded-9xl">Team</span>
-            <h3 class="mb-4 text-3xl md:text-5xl leading-tight text-coolGray-900 font-bold tracking-tighter">Authors
+            <h3
+              class="text-3xl md:text-5xl leading-tight text-coolGray-900 my-[40px] font-bold tracking-wider animate-bounce">
+              Authors
               Returned</h3>
-            <p class="mb-14 md:mb-24 text-lg md:text-xl text-coolGray-500 font-medium">Your search for {genre/tag/topic}
-              returned the following authors</p>
+            <!-- <p class="mb-14 md:mb-24 text-lg md:text-xl text-coolGray-500 font-medium">Your search for <span
+                id="tag"></span>
+              returned the following authors</p> -->
 
-            <div id="author-container" class="flex flex-wrap -mx-4">
+            <div id="author-container" class="flex flex-wrap mx-4 capitalize">
 
 
             </div>
@@ -75,13 +79,13 @@
                 the soul. Dance is the hidden language of the soul. Dance is the hidden language of the soul. Dance is
                 the hidden language of the soul. Dance is the hidden language of the soul. Dance is the hidden language
                 of the soul. Dance is the hidden language of the soul. </p>
-              <div class="flex items-center space-x-2">
+              <div class="flex justify-around items-center space-x-2">
                 <button
-                  class="inline-block py-1 px-2 w-full md:w-auto text-sm leading-7 bg-sky-200 hover:bg-sky-600 font-medium text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent rounded-md shadow-sm">quotes</button>
+                  class="inline-block py-1 px-2 w-auto md:w-auto text-sm text-center leading-7 bg-sky-200 hover:bg-sky-600 font-medium text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent rounded-md shadow-sm">quotes</button>
                 <button
-                  class="inline-block py-1 px-2 w-full md:w-auto text-sm leading-7 bg-sky-200 hover:bg-sky-600 font-medium text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent rounded-md shadow-sm">books</button>
+                  class="inline-block py-1 px-2 w-auto md:w-auto text-sm text-center leading-7 bg-sky-200 hover:bg-sky-600 font-medium text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent rounded-md shadow-sm">books</button>
                 <button
-                  class="inline-block py-1 px-2 w-full md:w-auto text-sm leading-7 bg-sky-200 hover:bg-sky-600 hover:bg-green-600 font-medium text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent rounded-md shadow-sm">birthplace
+                  class="inline-block py-1 px-2 w-auto md:w-auto text-sm text-center leading-7 bg-sky-200 hover:bg-sky-600 hover:bg-green-600 font-medium text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent rounded-md shadow-sm">birthplace
                   weather</button>
               </div>
             </div>
