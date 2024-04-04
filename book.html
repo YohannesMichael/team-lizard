@@ -17,13 +17,11 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/book.css" />
     <!-- Default base style alocated at rest.css -->
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" />
-    <!-- Custom font applied to website Furore-regular -->
-    <link rel="stylesheet" type="text/css" charset="utf-8"
-        href="./assets/css/cfonts/furore-font-pac/web-font/furore-regular/style-cfont-furore.css" />
     <title>Home | Book-API</title>
 </head>
 
 <body>
+    <div id="format">
     <div id="header">
         <section id="header-main">OpenLibrary-<span>API</span></section>
     </div>
@@ -33,23 +31,23 @@
             <input type="text" id="book" name="book" placeholder="Insert name of the book" autocomplete="book"
                 required />
             <div id="error-message"></div>
-            <button type="button" id="submit" name="submit" value="">Book-search<span id="shevron"> >>></span></button>
+            <button type="button" id="submit" name="submit" value="">Book-search<span id="shevron">
+                    >>></span></button>
             <button type="button" id="clear" name="clear" value="">Clear-data</button>
         </section>
         <section id="current-book">
             <section id="sub-section">
                 <section id="sub-sub">
                     <div id="book-cover"></div>
-                    <div id="current-book"></div>
+                    <div id="book-current"></div>
                 </section>
                 <section id="sub-sub-2">
                     <div id="author-img"></div>
-                    <div id="current-author"></div>
+                    <div id="author-current"></div>
                 </section>
             </section>
         </section>
     </div>
-    <div></div>
     <div id="middle">
         <section id="book-list">
             <section id="book-1">
@@ -78,6 +76,7 @@
             </section>
         </section>
     </div>
+    </div>
     <footer id="bottom">
         <p>Book-<span>API</span></p>
         <p>Copyright&copy;
@@ -89,7 +88,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="./assets/js/book.js"></script>
-    <script src="./assets/js/he.js"></script>
 </body>
 
 </html>
