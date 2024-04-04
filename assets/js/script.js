@@ -160,7 +160,7 @@ async function fetchAuthors(tag) {
         return (JSON.parse(localStorage.getItem(`tag-${tag}`)));
     } */
     //console.log("fetch Authors recieved a tag: ",tag);
-    const limit = 50;
+    const limit = 150;
     params = `${tag}.json`; //option to add parameters
     fetchUrl = `https://openlibrary.org/subjects/${params}`
     //console.log("fetch authours url: ",fetchUrl);
