@@ -307,6 +307,10 @@ async function createAuthorCard(author, $appendTo) {
     }
     const list = await renderQuotesList(author.quotes, author.name);
 
+    if (author.quotes.length === 0) {
+        return;
+    }
+
     let $authorCard = $(`<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-10"></div>`);
     let $authorInnerContainer = $(`<div class="max-w-xs mx-auto md:ml-0"></div>`);
     let $authorImage = $(`<img class="w-24 h-24 mb-6 rounded-full" src="https://t4.ftcdn.net/jpg/05/95/83/67/360_F_595836741_8hyycaWwQphpA0vaMsuoce7tRr8xPKtP.jpg" alt="">`);
