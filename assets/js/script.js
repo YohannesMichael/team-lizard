@@ -18,23 +18,24 @@ const LIMIT = 150;
 // tags that are available at the QUOTES_URL.
 
 
-//this sets up the available genres to use based on the quoteable site. 
-const genres = fetchTags(); //fetches all tages from quoteable site
+//this sets up the available genres to use based on the quoteable site.
+let genres = [];
+function startup () {
+    genres = fetchTags(); //fetches all tages from quoteable site
+}
+startup();
 
-//this sets the jquery item for the search bar
+//this sets the jquery item for the search bar and searchbutton
 $searchBar = $('#search-bs-class');
-
 $searchButton = $('#search-btn');
 
 //this creates a jquery reference to the tagList below the search bar.
 $tagList = $('#tag-list'); 
 
 //this produces 5 random tags from the genre list under the search bar.
-
 populateTagList($tagList,return5RandomGenres(genres));
+//console.log("return random: ",return5RandomGenres(genres));
 
-//this function gets a 5 long random list from the whole genres list and appends a button for each of the 5 into the 
-//$tagList jquery div.
 
 //event handler that sets a function to handle the button clicks bubling up to the div taglist.
 $tagList.on('click',function(e) {
@@ -270,6 +271,7 @@ $authors = $("#author-container").addClass('container');
 
 function renderAuthorList(authorList) {
     //console.log("renderAuthourList called",authorList);
+    $authors.empty();
     for (author of authorList) {
         $authors.append(createAuthorCard(author,$authors));
     }
@@ -300,7 +302,7 @@ async function createAuthorCard (author,$appendTo) {
     //this needs developing, by taking the code out from getAuthourWorks function and putting it in 
     //here we get an authorcard we can append to the authorcontainer div
     // The author object should be name, biography, quotes list, place of birth, weather in place of birth, etc.
-
+    
     const blankAuthor = {
         name: "",
         quotes: []
@@ -322,6 +324,7 @@ async function createAuthorCard (author,$appendTo) {
     $authorInnerContainer.append($authorQuotesTitle);
     $authorInnerContainer.append($authorQuotesText);
     $authorCard.append($authorInnerContainer);
+    
     $appendTo.append($authorCard);
     
 
