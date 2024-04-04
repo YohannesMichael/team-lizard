@@ -1,6 +1,6 @@
 const QUOTABLE_URL = "https://api.quotable.io";
 
-const QUOTABLE_TAGS_URL = "https://api.quotable.io/tags";
+
 
 const QUOTES_ENDPOINT = "/quotes";
 
@@ -20,8 +20,9 @@ const LIMIT = 150;
 
 //this sets up the available genres to use based on the quoteable site.
 let genres = [];
-function startup () {
-    genres = fetchTags(); //fetches all tages from quoteable site
+async function startup () {
+    genres = await fetchTags(); //fetches all tages from quoteable site
+    populateTagList($tagList,return5RandomGenres(genres));
 }
 startup();
 
@@ -33,7 +34,7 @@ $searchButton = $('#search-btn');
 $tagList = $('#tag-list'); 
 
 //this produces 5 random tags from the genre list under the search bar.
-populateTagList($tagList,return5RandomGenres(genres));
+
 //console.log("return random: ",return5RandomGenres(genres));
 
 
@@ -55,7 +56,7 @@ $searchButton.on('click',function(e) {
 });
 
 function populateTagList(tagList,genres) {
-    
+    console.log("populate gets:",tagList," and ",genres);
     tagList.empty();
     for (buttonName of genres) {
         tagList.append(`<button data-genre="${buttonName}"class="flex-1 py-3 px-3 rounded-3xl w-full leading-7 bg-sky-100 hover:bg-sky-600 font-bold text-center focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 border border-transparent shadow-sm">${buttonName}</button>`)
@@ -65,10 +66,11 @@ function populateTagList(tagList,genres) {
 //returns 5 random itesm from an array
 function return5RandomGenres(genres) {
     let arr = []
-
+    console.log("return random gets in :",genres);
     for (let x = 0; x < 5; x++) {
         arr.push(genres[Math.floor(Math.random() * genres.length) + 1]);
     }
+    console.log("return random results in :",arr);
     return arr;
 }
 
@@ -108,22 +110,22 @@ async function fetchTags(){
     if (!localStorage.getItem('tagList')) {
 
         params = "?limit=150"; //option to add parameters
-        fetchUrl = `${QUOTABLE_TAGS_URL}${params}`;
+        fetchUrl = `https://api.quotable.io/tags${params}`;
         let headers = new Headers();
 
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
         headers.append('Origin','http://localhost:3000');
 
-
-        const response = await fetch(fetchUrl,headers);
-        const data = await response.data;
-        
+        console.log(fetchUrl);
+        const response = await fetch(fetchUrl);
+        console.log("response: ",response);
+        const data = await response.json();
         console.log("data: ",data);
         for (dataPoint of data) {
             tagList.push(dataPoint.slug);
         }
-        localStorage.setItem('tagList',tagList);
+        localStorage.setItem('tagList',JSON.stringify(tagList));
     
 } else {
         tagList = JSON.parse(localStorage.getItem('tagList'));
@@ -249,11 +251,10 @@ async function fetchQuotes(author) {
             fetchQuotesList.push(dataPoint.content);
         }
     } else {
-        fetchQuotesList = ["no quotes found"];
-        
-        localStorage.setItem(`author-quotes-${author}`,JSON.stringify(fetchQuotesList));
-        return fetchQuotesList;
+        fetchQuotesList = ["no quotes found"];    
     }
+    localStorage.setItem(`author-quotes-${author}`,JSON.stringify(fetchQuotesList));
+    return fetchQuotesList;
 }
 }
 
