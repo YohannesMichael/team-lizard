@@ -307,6 +307,7 @@ async function createAuthorCard(author, $appendTo) {
     }
     const list = await renderQuotesList(author.quotes, author.name);
 
+    // only display author cards with quotes
     if (author.quotes.length === 0) {
         return;
     }
