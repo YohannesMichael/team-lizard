@@ -103,42 +103,34 @@ let authorList = [];
 //run first to setup auto complete for search bar. can use const tags = fetchTags()
 //fetchTags now fetches once and stores in local storage so that it doesent have 
 //to keep making calls.
-function fetchTags(){
-    
+async function fetchTags(){
+    let tagList = [];
     if (!localStorage.getItem('tagList')) {
 
-    params = "?limit=150"; //option to add parameters
-    fetchUrl = `${QUOTABLE_TAGS_URL}${params}`;
-    let tagList = [];
-    let headers = new Headers();
+        params = "?limit=150"; //option to add parameters
+        fetchUrl = `${QUOTABLE_TAGS_URL}${params}`;
+        let headers = new Headers();
 
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    headers.append('Origin','http://localhost:3000');
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        headers.append('Origin','http://localhost:3000');
 
 
-    fetch(fetchUrl)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    //console.log("fetchtags: " ,data);
+        const response = await fetch(fetchUrl,headers);
+        const data = await response.data;
+        
+        console.log("data: ",data);
+        for (dataPoint of data) {
+            tagList.push(dataPoint.slug);
+        }
+        localStorage.setItem('tagList',tagList);
     
-
-    for (dataPoint of data) {
-        tagList.push(dataPoint.slug);
-    }
-    return tagList;
-  })
-  .then( function (data){
-    localStorage.setItem('tagList',JSON.stringify(data));
-    });
 } else {
-    tagList = JSON.parse(localStorage.getItem('tagList'));
-    //console.log("tagList found in localstorage:");
-}
+        tagList = JSON.parse(localStorage.getItem('tagList'));
+        //console.log("tagList found in localstorage:");
+    }
   
-  return tagList;
+    return tagList;
     //taglist is a result of the type array, containing an array of objects which 
     //can act like a genre search in relation to books from https://api.quotable.io"
     
@@ -176,7 +168,7 @@ async function fetchAuthors(tag) {
         authorList.push(name);
     }
     //console.log(authorList);
-    localStorage.setItem(`tag-${tag}`,JSON.stringify(data));
+    localStorage.setItem(`tag-${tag}`,authorList);
     return authorList; 
 };
 
@@ -243,29 +235,31 @@ async function fetchQuotesToAuthor (list) {
 
 async function fetchQuotes(author) {
     fetchUrl = `https://api.quotable.io/quotes?author=${nameToSlug(author)}`;
-    let fetchQuotesList =[];
-    //console.log("fetch quotes url", fetchUrl);
+    let fetchQuotesList = JSON.parse(localStorage.getItem(`author-quotes-${author}`));
+    
+    if (fetchQuotesList) {
+        return fetchQuotesList;
+    } else {
     const response = await fetch(fetchUrl)
     const data = await response.json();
-
-    for (dataPoint of data.results) {
-        //console.log(dataPoint.content);
-        fetchQuotesList.push(dataPoint.content);
-    }
-        localStorage.setItem(`quotesList-${author}`,JSON.stringify(data))
-        return fetchQuotesList;
+    
+    if (data.results.length) {
+        for (dataPoint of data.results) {
+            //console.log(dataPoint.content);
+            fetchQuotesList.push(dataPoint.content);
+        }
+    } else {
+        fetchQuotesList = ["no quotes found"];
         
+        localStorage.setItem(`author-quotes-${author}`,JSON.stringify(fetchQuotesList));
+        return fetchQuotesList;
     }
-
-//console.log('fetch quotes', fetchQuotes('ben elton'));
-//console.log('fetch quotes', fetchQuotes('aldous huxley'));
-//console.log('fetch quotes', fetchQuotes('william shakespeare'));
+}
+}
 
 
 //fetch all tags from QUOTES_URL
 //console.log(fetchTags()); 
-
-
 
 $authors = $("#author-container").addClass('container');
 
