@@ -296,6 +296,9 @@ function renderQuotesList(quotesArray, author) {
     return $returnElement;
 }
 
+
+// new author set to add unique authors
+const authorSet = new Set();
 async function createAuthorCard(author, $appendTo) {
     //this needs developing, by taking the code out from getAuthourWorks function and putting it in 
     //here we get an authorcard we can append to the authorcontainer div
@@ -311,6 +314,13 @@ async function createAuthorCard(author, $appendTo) {
     if (author.quotes.length === 0) {
         return;
     }
+
+    // checks if authorSet has a duplicate and returns
+    if (authorSet.has(author.name.toLowerCase())) {
+        return
+    }
+    // appends author name to unique set of authors
+    authorSet.add(author.name.toLowerCase());
 
     let $authorCard = $(`<div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-10"></div>`);
     let $authorInnerContainer = $(`<div class="max-w-xs mx-auto md:ml-0"></div>`);
