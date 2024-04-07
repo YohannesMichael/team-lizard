@@ -15,6 +15,7 @@
   --aqua: aqua;
   --dark: black;
   --light: white; 
+  --success: rgb(3, 102, 3);
   --error: rgb(170, 28, 28);
   --gray: rgb(240, 240, 240);
   --gray-dark: rgb(23,23,23);
@@ -25,16 +26,16 @@
 }
 
 body {
-  width: 100%;
+  width: 50%;
   margin: 0 auto;
   font-size: 24px;
-  min-width: 1000px;
+  min-width: 600px;
   background-color: var(--light);
   font-family: "Roboto", sans-serif;
 }
 
 div#format {
-  width: 80%;
+  width: 100%;
   padding: 20px;
   border-radius: 10px;
   margin: 40px auto 0 auto;
@@ -49,7 +50,7 @@ div#header {
 }
 
 div#header section#header-main {
-  width: 80%;
+  width: 100%;
   line-height: 2;
   margin: 0 auto;
   font-size: 85px;
@@ -82,54 +83,147 @@ div#top section#current-book {
   width: 100%;
   height: auto;
   margin: 0 auto;
-  background-color: var(--gray);
+  border-radius: 10px;
 }
 
 div#top section#current-book section#sub-section {
-  height: 450px;
+  height: auto;
   display: flex;
   margin:0 auto;
   border-radius: 5px;
-  flex-direction: row;
-  background-color: var(--gray);
-  border: 3px solid var(--gray-dark);
+  flex-direction: column;
+  /*background-color: var(--gray);*/
+  border: 0px solid var(--gray-dark);
 }
 
 div#top section#current-book section#sub-section section#sub-sub,
 div#top section#current-book section#sub-section section#sub-sub-2 {
-  width: 50%;
-  display: flex; 
-  height: 450px;
-  border-radius: 10px;
+  width: 80%;
+  height: auto;
+  display: flex;
+  margin: 0 auto;
+  visibility: hidden;
+  /*background-color: var(--custom-gray);*/
+}
+
+div#top section#current-book section#sub-section section#sub-sub {
+  margin-top: 20px;  
+  border-radius: 5px;
   flex-direction: row;
-  border: 3px solid var(--naval-blue);
+  border: 1px solid var(--gray-dark);
   background-color: var(--custom-gray);
 }
 
-div#top section#current-book section#sub-section section#sub-sub div#book-cover,
+div#top section#current-book section#sub-section section#sub-sub-2 {
+  padding: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: 1px solid var(--gray-dark);
+  background-color: var(--custom-gray);
+}
+
 div#top section#current-book section#sub-section section#sub-sub-2 div#author-img {
-  padding: 5px;
-  margin: auto auto;
+  width: 150px;
 }
 
-div#top section#current-book section#sub-section section#sub-sub div#book-cover img,
 div#top section#current-book section#sub-section section#sub-sub-2 div#author-img img {
-  margin: 0;
+  width: 150px;
+  border-radius: 5px;
+  margin: 20px 0 20px 0;
+  border: 1px solid var(--gray-dark);
 }
 
-div#top section#current-book section#sub-section section#sub-sub div#book-current,
 div#top section#current-book section#sub-section section#sub-sub-2 div#author-current {
-  font-size: 20px;
-  margin: auto auto;
-  text-align: justify;
-  white-space: pre-line;
+  width: calc(100% - 150px);
+}
+
+div#top section#current-book section#sub-section section#sub-sub-2 div#author-current p {
+  line-height: 1.5;
+  color: var(--dark);
+  font-size: x-large;
+  font-weight: bolder;
+  margin: 20px 0 20px 0;
   font-family: "Roboto", sans-serif;
 }
 
-div#top section#current-book section#sub-section section#sub-sub div#book-current p,
-div#top section#current-book section#sub-section section#sub-sub-2 div#author-current p {
-  margin: 0;
+div#top section#current-book section#sub-section section#sub-sub-2 div#author-current p:first-child {
+  font-size: 40px;
 }
+
+div#top section#current-book section#sub-section section#sub-sub-2 div#author-bio {
+  width: 100%;
+}
+
+div#top section#current-book section#sub-section section#sub-sub-2 div#author-bio p {
+  text-align: left;
+  font-size: x-large;
+  color: var(--dark);
+  letter-spacing: 0px;
+  padding-bottom: 20px;
+  white-space: pre-line;
+  word-wrap: break-word;
+  font-family: "Roboto", sans-serif;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-cover {
+  padding: 20px 0 20px 20px;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-cover img
+{
+  margin: 0;
+  width: 250px;
+  border-radius: 5px;
+  border: 1px solid var(--gray-dark);
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-current {
+  margin: auto 0;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-current p {
+  color: var(--dark);
+  font-size: x-large;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(2),
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(3),
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(4),
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(5),
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(6) {
+  padding-top: 10px;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:first-child {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(2) {
+  font-size: x-large;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(3),
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(4), 
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(5), 
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(6) {
+  font-size: x-large;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(5) {
+  font-weight: bold;
+}
+
+div#top section#current-book section#sub-section section#sub-sub div#book-current p:nth-child(6) {
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
 
 div#middle {
   width: 100%;
@@ -142,11 +236,12 @@ div#middle section#book-list {
   width: 100%;
   height: auto;
   display: flex;
-  margin: 0 auto;
   flex-wrap: wrap;
   border-radius: 5px;
+  border-radius: 10px;
+  margin: 20px auto 0 auto;
   background-color: var(--gray);
-  border: 0px solid var(--gray-dark);
+  border: 1px solid var(--gray-dark);
 }
 
 div#middle section#book-list section#book-1,
@@ -154,19 +249,24 @@ div#middle section#book-list section#book-2,
 div#middle section#book-list section#book-3,
 div#middle section#book-list section#book-4,
 div#middle section#book-list section#book-5,
-div#middle section#book-list section#book-6 {
-  width: calc(100% / 3);
+div#middle section#book-list section#book-6,
+div#middle section#book-list section#book-7,
+div#middle section#book-list section#book-8,
+div#middle section#book-list section#book-9,
+div#middle section#book-list section#book-10,
+div#middle section#book-list section#book-11,
+div#middle section#book-list section#book-12 {
   display: flex;
   height: 400px;
   margin: 15px auto;
   font-size: medium;
   font-weight: bold;
-  border-radius: 10px;
-  flex-direction: row;
+  flex-direction: row; 
+  width: calc(100% / 3);
   color: var(--naval-blue);
   font-family: "Roboto", sans-serif;
-  border: 3px solid var(--naval-blue);
-  background-color: var(--custom-gray);
+  border: 0px solid var(--naval-blue);
+  /*background-color: var(--custom-gray);*/
 }
 /*
 div#middle section#book-list section#book-1,
@@ -276,26 +376,42 @@ button#submit:hover, button#clear:hover {
   border: 3px solid var(--naval-blue);
 }
 
-div#error-message {
+div#error-message,
+div#loadingMessage {
   margin-left: 10%;
   line-height: 1.5;
 }
 
-div#error-message p {
+div#error-storage-empty {
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+div#error-message p,
+div#error-storage-empty p {
   font-size: 25px; 
   font-weight: bold; 
   color: var(--error); 
   font-family: "Roboto", sans-serif;
 }
 
+div#loadingMessage p {
+  font-size: x-large; 
+  font-weight: bold; 
+  color: var(--success); 
+  font-family: "Roboto", sans-serif;
+}
+
+div#error-storage-empty p {
+  margin-bottom: 20px;
+}
+
 footer#bottom {
-  top: 0;
-  left: 10%;
-  width: 80%;
+  width: 100%;
   height: 350px;
+  margin: 0 auto;
   line-height: 2;
   text-align: left;
-  position: relative;
   background-color: var(--light);
   font-family: "Roboto", sans-serif;
 }
@@ -305,20 +421,30 @@ footer#bottom p span {
 }
 
 footer#bottom p {
-  left: 15px;
-  display: block;
   font-size: 18px;
   text-align: left;
   font-weight: bold;
-  margin: 0 15px 0 15px;
   color: var(--naval-blue);
 }
 
 footer#bottom p:first-child {
   font-size: 70px;
-  margin-top: 20px;
   font-weight: bold;
   font-family: "Roboto", sans-serif;
+}
+
+@media only screen and (max-width: 1500px) {
+  div#top section#current-book section#sub-section {
+    flex-direction: column;
+  }
+
+  div#top section#current-book section#sub-section section#sub-sub {
+    flex-direction: column;
+  }
+
+  div#top section#current-book section#sub-section section#sub-sub div#book-cover {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 1200px) {
@@ -342,13 +468,3 @@ footer#bottom p:first-child {
   }
 }
 
-@media only screen and (max-width: 1500px) {
-  div#top section#current-book section#sub-section {
-    flex-direction: column;
-  }
-
-  div#top section#current-book section#sub-section section#sub-sub,
-  div#top section#current-book section#sub-section section#sub-sub-2 {
-    width: 100%;
-  }
-}
